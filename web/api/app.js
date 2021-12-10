@@ -12,8 +12,6 @@ var testAPIRouter = require('./routes/testAPI');
 
 var app = express();
 
-console.log(socketapi)
-console.log(1)
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -30,6 +28,9 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/testAPI', testAPIRouter);
 
+let io = socketapi.io
+console.log(io)
+console.log(3)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

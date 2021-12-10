@@ -10,21 +10,51 @@ let sequenceNumberByClient = new Map();
 io.on("connection", (socket) => {
     console.info(`Client connected [id=${socket.id}]`);
     console.log(socket.handshake.auth)
-    // initialize this client's sequence number
-    sequenceNumberByClient.set(socket, 1);
-    console.log(sequenceNumberByClient.size)
-    // when socket disconnects, remove it from the list:
-    socket.on("disconnect", () => {
-        sequenceNumberByClient.delete(socket);
-        socket.removeAllListeners('send message');
-        socket.removeAllListeners('disconnect');
-        socket.removeAllListeners('connection');
-        console.info(`Client gone [id=${socket.id}]`);
-    });
+    let role = socket.handshake.auth.token
+    // for client (PC, mobile) devices
+    if(role == 'client'){
+        // initialize this client's sequence number
+        sequenceNumberByClient.set(socket, 1);
+        console.log(sequenceNumberByClient.size)
+        // when socket disconnects, remove it from the list:
+        socket.on("disconnect", () => {
+            sequenceNumberByClient.delete(socket);
+            /*
+            socket.removeAllListeners('send message');
+            socket.removeAllListeners('disconnect');
+            socket.removeAllListeners('connection');
+
+             */
+            console.info(`Client gone [id=${socket.id}]`);
+        });
+
+        socket.on('alert', ()=> {
+            console.log("server alerted")
+            socket.broadcast.emit("alert", 'hello')
+        })
+    }
+    //for arduino boards
+    else if(role == 'device'){
+
+    }
+    else{
+
+    }
+
 });
+
+io.on('reconnect', ()=>{
+    console.log("reconnect")
+})
+
 
 io.on("message", (socket) => {
 
+})
+
+io.on("alert", (socket) => {
+    console.log("alert on server")
+    socket.broadcast.emit("alert", "alerted")
 })
 
 io.on("error", socket => {
