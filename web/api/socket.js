@@ -28,9 +28,9 @@ io.on("connection", (socket) => {
             console.info(`Client gone [id=${socket.id}]`);
         });
 
-        socket.on('alert', ()=> {
+        socket.on('alert', (data)=> {
             console.log("server alerted")
-            socket.broadcast.emit("alert", 'hello')
+            socket.broadcast.emit("alert", data)
         })
     }
     //for arduino boards
