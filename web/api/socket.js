@@ -47,20 +47,6 @@ io.on('reconnect', ()=>{
     console.log("reconnect")
 })
 
-
-io.on("message", (socket) => {
-
-})
-
-io.on("alert", (socket) => {
-    console.log("alert on server")
-    socket.broadcast.emit("alert", "alerted")
-})
-
-io.on("error", socket => {
-    console.log("error")
-})
-
 // sends each client its current sequence number
 setInterval(() => {
     for (const [client, sequenceNumber] of sequenceNumberByClient.entries()) {
