@@ -39,15 +39,47 @@ function Index() {
             .then(res => setState1(res))
             .catch(err => err)
     }
-
     return (
         <div className="App">
-            <header>
-            </header>
-            <p className="App-intro">{state1}</p>
-            <button onClick={sockEmit}>emit</button>
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+            </style>
+            <body>
+                <header className="">
+                    <nav className="nav">
+                        <div className="nav-wrap" id="nav-wrap">
+                            <div className="main_link">
+                                <a href="/index">AIM Group 4</a>
+                            </div>
+                            <div className="nav_options">
+                                <div className="nav_options_item">
+                                    <a className="nav_selected" href="/index">Dashboard</a>
+                                </div>
+                                <div className="nav_options_item">
+                                    <a href="#">Menu 1</a>
+                                </div>
+                                <div className="nav_options_item">
+                                    <a href="#">Menu 2</a>
+                                </div>
+                                <div className="nav_options_item">
+                                    <a href="#">Menu 3</a>
+                                </div>
+                            </div>
+                            <div className="nav_profile">
+                                <a href="#">Profile</a>
+                            </div>
+                        </div>
+                    </nav>
+                </header>
+                <div className="body_main">
+                    <p className="App-intro">{state1}</p>
+                    <button onClick={sockEmit}>emit</button>
+                </div>
+            </body>
         </div>
     );
+
+
 }
 
 export default Index
