@@ -28,7 +28,12 @@ io.on("connection", (socket) => {
             console.info(`Client gone [id=${socket.id}]`);
         });
 
-        socket.on('alert', (data)=> {
+        socket.on('device_alert', (data)=> {
+            console.log("server alerted")
+            socket.broadcast.emit("device_alert", data)
+        })
+
+        socket.on('client_alert', (data)=> {
             console.log("server alerted")
             socket.broadcast.emit("alert", data)
         })

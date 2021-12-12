@@ -17,7 +17,7 @@ function App (){
             <Router>
                 <Routes>
                     {}
-                    <Route path="/index" element={Index()}/>
+                    <Route path="/" element={Index()}/>
                 </Routes>
             </Router>
         }

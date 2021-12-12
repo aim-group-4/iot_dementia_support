@@ -6,7 +6,10 @@ let count = 0
 function Index() {
     let socket
     let sock
-    useEffect(() => {
+    useEffect(async () => {
+        const response = await fetch('http://localhost:9000/')
+        let res_reader = response.text()
+        console.log(await res_reader)
         socket = io(SERVER, {
             autoConnect: false,
             reconnection: false,
@@ -18,19 +21,19 @@ function Index() {
         sock.on('message', (data) => {
             console.log("message")
         })
-        sock.on('alert', (data) => {
+
+        sock.on('device_alert', (data) => {
             console.log('alertted!')
             console.log("device was: " + data)
             color_setter_arr[parseInt(data)-1]("red")
         })
     })
-
     function sockEmit(num){
         console.log("sockEmit function called")
         console.log(sock)
         if(sock){
             console.log("emitting...")
-            sock.emit('alert', num)
+            sock.emit('device_alert', num)
         }
     }
 
