@@ -10,6 +10,12 @@
 ESP8266WiFiMulti WiFiMulti;
 SocketIoClient webSocket;
 
+//whether butotn is clicked
+bool button_clicked = false;
+
+//set the device id
+int id = 1;
+
 void event(const char * payload, size_t length) {
   USE_SERIAL.printf("got message: %s\n", payload);
 }
@@ -35,14 +41,17 @@ void setup() {
     while(WiFiMulti.run() != WL_CONNECTED) {
         delay(100);
     }
-
-    webSocket.on("event", event);
+    
+    webSocket.on("alert_device", event);
     webSocket.begin("https://dry-garden-16739.herokuapp.com/", 9000, "/socket.io/?transport=websocket");
     // use HTTP Basic Authorization this is optional remove if not needed
     //webSocket.setAuthorization("username", "password");
 }
 
 void loop() {
-    webSocket.emit("alert_client", "1"); 
+    if(button_clicked){
+      webSocket.emit("alert_client", id);
+      button_clicked = false;
+    }
     webSocket.loop();
 }
